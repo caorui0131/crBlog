@@ -3,11 +3,11 @@ extends layout
 block css
 //-   link(rel='stylesheet', href='/stylesheets/index.css')
 block content
-  div.main
-    h1 #{blog[0].title}
-    div.blogItem
-        div.blogItem-info
-            a.author(href='/user/'+blog[0].author target="_blank") #{blog[0].author}&nbsp;
-            span #{blog[0].createtime}
-        div.blogItem-content
-            p #{blog[0].content}
+    div.main
+        h1 #{blog[0].title}
+        div.blogItem
+            div.blogItem-info
+                a.author(href='/user/'+blog[0].author target="_blank") #{blog[0].author}&nbsp;
+                span #{blog[0].createtime}
+            div.blogItem-content
+                p #{blog[0].content}

@@ -33,10 +33,8 @@ function selectBlogDetail(id){
   return new Promise(function (resolve, reject) {
     connection.query('SELECT * from blogs WHERE id='+id, function (error, results, fields) {
       if (error) {
-        console.log(error);
         reject(error);
       } else {
-        console.error(results);
         resolve(results);
       }
     });
@@ -48,10 +46,8 @@ function selectUser(id){
   return new Promise(function (resolve, reject) {
     connection.query('SELECT * from blogs WHERE author="'+id+'"', function (error, results, fields) {
       if (error) {
-        console.log(error);
         reject(error);
       } else {
-        console.error(results);
         resolve(results);
       }
     });
@@ -63,10 +59,8 @@ function createBlog(blog){
   return new Promise(function (resolve, reject) {
     connection.query('INSERT INTO blogs(title,content,createtime,author) VALUES("'+blog.title+'","'+blog.content+'","'+formatDate(new Date())+'","'+blog.author+'")', function (error, results, fields) {
       if (error) {
-        console.log(error);
         reject(error);
       } else {
-        console.error(results);
         resolve(results);
       }
     });
@@ -78,10 +72,8 @@ function updateBlog(blog){
   return new Promise(function (resolve, reject) {
     connection.query('UPDATE blogs SET title = "'+blog.title+'",content="'+blog.content+'",author="'+blog.author+'",createtime="'+formatDate(new Date())+'" where id = '+blog.id, function (error, results, fields) {
       if (error) {
-        console.log(error);
         reject(error);
       } else {
-        console.error(results);
         resolve(results);
       }
     });
@@ -93,6 +85,18 @@ function deleteBlog(id){
   return new Promise(function (resolve, reject) {
     connection.query('DELETE FROM blog.blogs where id ='+id, function (error, results, fields) {
       if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+};
+
+function checkLogin(data){
+  return new Promise(function (resolve, reject) {
+    connection.query(`select username,password from users where username='${data.username}'and password='${data.password}';`, function (error, results, fields) {
+      if (error) {
         console.log(error);
         reject(error);
       } else {
@@ -101,7 +105,7 @@ function deleteBlog(id){
       }
     });
   });
-};
+}
 
 function formatDate(date) {
   var date = new Date(date);
@@ -120,5 +124,6 @@ module.exports = {
   selectUser,
   createBlog,
   updateBlog,
-  deleteBlog
+  deleteBlog,
+  checkLogin
 };

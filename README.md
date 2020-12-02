@@ -3,6 +3,7 @@
 - 首页 done
 	- 查看博客 done
 	- 查看作者 done
+	- 面包屑 
 - 作者主页 done 
 - 博客详情页 done
 - 管理中心 done
@@ -10,7 +11,7 @@
 	- 编辑博客 done
 	- 删除博客 done
 - 博客新建页、编辑页 done
-- 登录
+- 登录 done 有问题
 - 搜索博客
 # vote
 ## 功能

@@ -21,6 +21,7 @@ block content
             p 作者：
             input(type="text" name="author" value=blog?blog[0].author:"")
         button#editBlog(type="submit" value="submit"  onclick="formSubmit()") #{buttonText}
+block script
     script.
         function formSubmit(){
             document.getElementById("myForm").submit();

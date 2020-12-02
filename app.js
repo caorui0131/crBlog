@@ -21,7 +21,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 app.use('/', indexRouter);
+app.use('/admin',function(req, res, next){
+  userName=req.cookies.name;
+  console.log("userName:",userName&&userName.length>0);
+  if(userName&&userName.length>0){
+    next();
+    return;
+  }
+  var backurl=req.originalUrl;
+  res.redirect("/login?backurl="+backurl);
+  //res.json("没有登录信息");
+})
 app.use('/admin', adminRouter);
 // app.use('/user', userRouter);
 // app.use('/blog', blogRouter);

@@ -1,13 +1,43 @@
 extends layout
 
 block css
-//-   link(rel='stylesheet', href='/stylesheets/admin.css')
+    style(type="text/css").
+        .logindiv{height: 400px;width: 350px;background:ffffff; 
+        position: absolute;left: 50%;top: 50%;margin:-250px 0 0 -150px;z-index: 2;
+        box-shadow: darkgrey 10px 10px 30px 5px ;}
+        .dl{text-align: center;top: 20px;position: absolute;left: 44%;}
+        .ipt{position: absolute;top:40%;left: 28%;width:142px;}
+        .loginbtn{width: 132px;background-color: #868080;}
+        .loginusername,.password,.loginbtn{float:left;}
+        #backurl{display:none}
 block content
-  //- 登录
-  div.main
-    div
-        span 用户名
-        input.username
-    div
-        span 密码
-        input.password
+    //- 登录
+    div.logindiv
+        p.dl 登录
+        div.ipt
+            input.username(type="text" placeholder="用户名")
+            input.password(type="password" placeholder="密码")
+            input.loginbtn(type="submit" value="登录")
+        #backurl #{backurl}
+block script
+    script.
+        $(document).ready(function(){
+            login();
+            function login(){
+                $(".loginbtn").click(function(){
+                    var username=$(".username").val();
+                    var password=$(".password").val();
+                    data={username,password,backurl};
+                    $.post('/login',data,function(data){
+                        alert(data.tips)
+                        //- location.reload();
+                        window.location.href=data.backurl;
+                    })
+                })
+            }
+            var  backurl= $('#backurl').text();
+            if(!backurl||backurl==''){
+                backurl='/'
+            }
+            console.log('backurl:',$('#backurl').text())
+        })

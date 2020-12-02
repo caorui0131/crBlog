@@ -1,0 +1,91 @@
+
+div.header
+    h1.title1(onclick="javascript:window.location.href='/'") #{title}
+    //- p.login(onclick="javascript:window.location.href='/login'") 登录
+    p.login() 登录
+    p.loginusername
+    //-  <!-- 退出登录 -->
+    div.loginhide
+        input.logoutbtn(type="submit" value="退出登录" )
+style.
+    html,body{height:100%;}
+    .header{display:block;height:50px;background:rgba(47,47,47,0.98);padding:0 auto;margin:0 auto;}
+    .title1{float:left;text-align:center;vertical-align: middle;color:white;margin:0 10px;}
+    .login,.loginusername{float:right;color:white;margin-right:10px;height:40px;}
+    .loginhide{box-shadow: darkgrey 10px 10px 30px 5px ;z-index: 3;height: 120px;width: 100px;background-color: #ffffff;position: absolute;top:3%;right:1.5%;display: none;}
+    .logoutbtn{width: 80px;background-color: #868080;position: relative;top:20%;left:15%;}
+script(src="/javascripts/jquery.js")
+script.
+    $(document).ready(function(){
+        //- 初始状态
+        $(".loginusername").hide();
+        if(document.cookie){
+        //- console.log("getCookiename:",getCookie("name"));
+            $(".login").hide();
+            $(".loginusername").html(getCookie("name2")).show();
+        }
+
+        // 定义取cookie函数
+        function getCookie(name){
+            var strcookie = document.cookie;//获取cookie字符串
+            console.log("strcookie:",strcookie)
+            var arrcookie = strcookie.split("; ");//分割
+            console.log("arrcookie:",arrcookie)
+            //遍历匹配
+            for ( var i = 0; i < arrcookie.length; i++) {
+                var arr = arrcookie[i].split("=");
+                console.log("arr"+i+":",arr)
+                // console.log("arr.length"+i+":",arr.length)
+                if (arr[0] == name){
+                    return arr[1];
+                }
+            }
+            return "";
+        }
+        //删除cookie
+        function deleteCookie(name){ 
+            var date=new Date(); 
+            date.setTime(date.getTime()-10000); 
+            document.cookie=name+"=v; expires="+date.toGMTString(); 
+        }
+        // 调用设置cookie、取cookie函数
+        //- setCookie("name","name1","1")
+        //- setCookie("name2","value2")
+        console.log("document.cookie:",document.cookie)
+        // 将cookie记录在浏览器中
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
+        }
+
+        //-交互
+        $(".loginusername").mouseover(function(){
+            $('.loginhide').show();
+        })
+        $(".loginusername").mouseout(function(){
+            $('.loginhide').hide();
+        })
+        $(".loginhide").mouseover(function(){
+            $('.loginhide').show();
+        })
+        $(".loginhide").mouseout(function(){
+            $('.loginhide').hide();
+        })
+        $(".logoutbtn").click(function(){
+            //- deleteCookie('name');
+            $.post("/logout",{},function(data){
+                alert(data)
+                location.reload();
+            })
+        }) 
+        $(".login").click(function(){
+            //- var backurl=req.originalUrl;
+            backurl = window.location.pathname;
+            //- alert(url);
+            //- backurl = url.substring(url.lastIndexOf('/') + 1, url.length);
+            //- alert(backurl);
+            window.location.href='/login?backurl='+backurl;
+        }) 
+    })
