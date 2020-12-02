@@ -1,0 +1,128 @@
+*{
+  margin: 0;padding: 0;
+}
+ul,li{
+  list-style: none;
+}
+textarea,button {
+  resize: none;
+  outline: none;
+}
+/* a{
+  text-decoration:none;
+  -webkit-tap-highlight-color: #666;
+  -webkit-user-select: none;
+  -moz-user-focus: none;
+  -moz-user-select: none;
+} */
+/* a:hover {color:#666;}   */
+/* a:visited {color:#666;}  */
+/* a:link {color:#666;}  */
+ul,
+ol,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+table,
+td,
+img,
+div,
+dl,
+dt,
+dd,
+textarea {
+margin: 0;
+padding: 0;
+border: 0;
+}
+.breadCrumbTitle{
+  padding-bottom: 15px;
+  border-bottom: 1px #dddddd solid;
+  margin-bottom: 4px;
+}
+.breadCrumbTitle li{
+  display: inline-block;
+  font-size: 14px;
+  color: #666 !important;
+}
+.main{
+  margin: auto auto;
+  width: 1346px;
+  padding: 28px 24px;
+  /* padding: 34px auto; */
+  /* width: 1346px; */
+}
+.summary{
+  font-size: 12px;
+  color: #999;
+  line-height: 18px;
+  margin-bottom: 25px;
+}
+a:hover{
+  color: #f7941e;
+  cursor: pointer;
+}
+.rank-a:hover{
+  color: #f7941e;
+}
+.no-list{
+  background-color: #fff;
+  width: 400px;
+  box-sizing: border-box;
+  height: 462px;
+  text-align: center;
+  margin: auto;
+  padding: 0px 0px 600px 0px;
+}
+.no-list .no-list-img{
+  margin: 0 auto;
+  margin-top: 250px;
+  margin-bottom: 40px;
+}
+.no-list .no-list-text{
+  font-size: 24px;
+  display: block;
+}
+.no_resources{
+  background-color: #fff;
+  width: 900px;
+  box-sizing: border-box;
+  height: 462px;
+  text-align: center;
+  margin: auto;
+}
+.no_resources p{
+  font-size: 24px;
+  display: block;
+  margin-top: 250px;
+}
+.no_resources a{
+  margin-top: 20px;
+  display: inline-block;
+  font-size: 16px;
+  padding: 0px 10px;
+  border: 1px #f7941e solid;
+  font-size: 14px;
+  color: #f7941e;
+  line-height: 34px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 3px 3px 3px 3px;
+}
+.no_resources a:hover {
+  border: 1px #f7941e solid;
+  background-color: #f7941e;
+  color: #FFF;
+}
+.blogItem-info{
+  padding-bottom: 10px;
+  border-bottom:1px #ccc solid;
+  margin-bottom: 20px;
+}

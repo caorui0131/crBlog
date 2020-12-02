@@ -1,0 +1,20 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/stylesheets/index.css')
+block content
+  //- h1= title
+  //- p Welcome to #{title}
+  //- 首页
+  div.header
+    a(href='/admin') 管理
+  div.main
+    h1 博客首页
+    div.blogList
+      each blog in blogList
+        div.blogItem
+          a(href='/blog/detail/'+blog.id target="_blank") #{blog.title}
+          div.blogItem-info
+            a.author(href='/user/'+blog.author target="_blank") #{blog.author}&nbsp;
+            span #{blog.createtime}
+

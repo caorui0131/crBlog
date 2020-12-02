@@ -1,0 +1,27 @@
+extends layout
+
+block css
+//-   link(rel='stylesheet', href='/stylesheets/admin.css')
+block content
+    //- 编辑博客
+    - var url = ''
+    - var buttonText = ''
+    -if(blog&&blog[0].id)
+        -url='/admin/editBlog/'+blog[0].id
+        - buttonText = '更新博客'
+    -else
+        -url='/admin/createBlog'
+        - buttonText = '创建博客'
+    div
+        form(id="myForm" action=url method='post')
+            p 标题：
+            input(type="text" name="title" value=blog?blog[0].title:"")
+            p 内容：
+            input(type="text" name="content" value=blog?blog[0].content:"")
+            p 作者：
+            input(type="text" name="author" value=blog?blog[0].author:"")
+        button#editBlog(type="submit" value="submit"  onclick="formSubmit()") #{buttonText}
+    script.
+        function formSubmit(){
+            document.getElementById("myForm").submit();
+        }

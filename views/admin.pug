@@ -1,0 +1,19 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/stylesheets/admin.css')
+block content
+  //- 管理中心
+  div.main
+    h1 管理中心
+    a(href='/admin/createBlog') 新建
+    div.blogList
+      each blog in blogList
+        div.blogItem
+          div.blogTitle
+            a(href='/blog/detail/'+blog.id target="_blank") #{blog.title}
+          div.blogItem-edit
+            a(href='/admin/editBlog/'+blog.id).edit 编辑 
+            span |&nbsp;
+            a(href='/admin/deleteBlog/'+blog.id).delete 删除
+
