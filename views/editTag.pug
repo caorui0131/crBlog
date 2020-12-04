@@ -1,0 +1,19 @@
+style(type="text/css").
+    .tagList{
+        height: 300px;
+        width: 200px;
+        background:#ccc; 
+    }
+div.tagList
+    -if(tag)
+        div 编辑标签列表
+            form(method='post' action='/admin/updateTag/'+tag[0].id)
+                p 标签名称
+                input(type='text' name='title'  value=tag[0].title) 
+                input(type='submit')
+    -else
+        div 新建标签列表
+            form(method='post' action='/admin/createTag')
+                p 标签名称
+                input(type='text' name='title') 
+                input(type='submit')

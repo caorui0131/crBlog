@@ -76,8 +76,10 @@ script.
         $(".logoutbtn").click(function(){
             //- deleteCookie('name');
             $.post("/logout",{},function(data){
-                alert(data)
-                location.reload();
+                if(data.code==200){
+                    alert(data.successText)
+                    location.reload();
+                }
             })
         }) 
         $(".login").click(function(){

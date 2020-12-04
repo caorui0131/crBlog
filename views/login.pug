@@ -23,21 +23,24 @@ block script
     script.
         $(document).ready(function(){
             login();
+            var  backurl= $('#backurl').text();
+            if(!backurl||backurl==''){
+                backurl='/'
+            }
             function login(){
                 $(".loginbtn").click(function(){
                     var username=$(".username").val();
                     var password=$(".password").val();
                     data={username,password,backurl};
                     $.post('/login',data,function(data){
-                        alert(data.tips)
-                        //- location.reload();
-                        window.location.href=data.backurl;
+                        if(data.code==200){
+                            alert(data.successText);
+                            //- location.reload();
+                            window.location.href=data.backurl;
+                        }else{
+                            alert(data.errMsg);
+                        }
                     })
                 })
             }
-            var  backurl= $('#backurl').text();
-            if(!backurl||backurl==''){
-                backurl='/'
-            }
-            console.log('backurl:',$('#backurl').text())
         })

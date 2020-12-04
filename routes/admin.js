@@ -68,6 +68,57 @@ router.get('/deleteBlog/:id',async function(req, res, next) {
     console.log(e);
     throw e;
   }
-  
+});
+
+// tag
+router.get('/createTag',async function(req, res, next) {
+  res.render('editTag', { });
+});
+router.post('/createTag',async function(req, res, next) {
+  var tag={
+    tag:req.body.title
+  }
+  var tagList= await db.createTag(tag).catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  // res.render('ediTag', { tagList});
+});
+router.get('/editTag/:id', async function (req, res, next) {
+  let id = req.params.id;
+  let tag = {};
+  tag = await db.selectTagDetail(id).catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  res.render('editTag', { tag });
+});
+router.post('/updateTag/:id', async function (req, res, next) {
+  let id = req.params.id;
+  var tag = {
+    id: id,
+    title: req.body.title
+  }
+  tag = await db.updateTag(tag).catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  console.log(tag)
+  // res.render('editBlog', { blog });
+  // res.send(id);
+  res.redirect('/admin/editTag/'+id);
+});
+router.get('/deleteTag/:id',async function(req, res, next) {
+  try{
+    var id=req.params.id;
+    await db.deleteTag(id).catch((err) => {
+      console.error(err);
+      throw err;
+    });
+    res.redirect('/tag');
+  }catch (e){
+    console.log(e);
+    throw e;
+  }
 });
 module.exports = router;
