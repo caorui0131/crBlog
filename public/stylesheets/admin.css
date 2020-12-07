@@ -2,12 +2,3 @@
     float: left;
     width: 60%;
 }
-.blogItem-edit{
-    /* width: 20%; */
-    /* float: right; */
-}
-.blogItem{
-    padding-bottom: 10px;
-    border-bottom:1px #ccc solid;
-    margin-bottom: 20px;
-}

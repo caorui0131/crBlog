@@ -1,17 +1,15 @@
 style(type="text/css").
     .tagList{
-        height: 300px;
-        width: 200px;
-        background:#ccc; 
+        
     }
-div.tagList
+div.tagList.div-box
     div 标签列表
     ul
         each tag in tagList
             li #{tag.title}
-                a(href='/admin/editTag/'+tag.id) 编辑
-                |&nbsp;
-                a(href='/admin/createTag') 添加
-                |&nbsp;
-                a(href='/admin/deleteTag/'+tag.id) 删除
+                //- a(href='/admin/editTag/'+tag.id) 编辑
+                //- |&nbsp;
+                //- a(href='/admin/createTag') 添加
+                //- |&nbsp;
+                //- a(href='/admin/deleteTag/'+tag.id) 删除
             

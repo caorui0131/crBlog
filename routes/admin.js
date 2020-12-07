@@ -7,7 +7,11 @@ router.get('/',async function(req, res, next) {
     console.error(err);
     throw err;
   });
-  res.render('admin', { blogList });
+  var tagList= await db.selectTagList().catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  res.render('admin', { blogList,tagList });
 });
 router.get('/createBlog', async function(req, res, next) {
   res.render('editBlog', {  });
