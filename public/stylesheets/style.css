@@ -1,6 +1,7 @@
 /* 通用 */
 *{
   margin: 0;padding: 0;
+  transition: all 0.2s;
 }
 ul,li{
   list-style: none;
@@ -46,6 +47,11 @@ a:hover{
   color: #0084ff;
   cursor: pointer;
 }
+input{
+  /* border: 0; */
+  outline: none; 
+  /* background-color: rgba(0, 0, 0, 0); */
+}
 .box-shadow{
   -webkit-box-shadow: 0 1px 3px rgba(18,18,18,.1);
   box-shadow: 0 1px 3px rgba(18,18,18,.1);
@@ -86,18 +92,111 @@ body{
   line-height: 50px;
   /* vertical-align: middle; */
 }
+.blogTagItem{
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 2px;
+  color: #0084ff;
+  background-color: rgba(0,132,255,0.1);
+  margin-left: 8px;
+}
+.ghostButton{
+  padding: 2px 8px;
+  border: 1px #0084ff solid;
+  border-radius: 2px;
+  color:  #0084ff !important;
+}
 /* 字体 */
+.title-article{
+  font-size: 28px;
+  word-wrap: break-word;
+  color: #222226;
+  font-weight: 600;
+  margin: 0;
+  word-break: break-all;
+}
+.title{
+  font-size: 16px;
+  color: #333;
+  line-height: 20px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .text{
   font-size: 14px;
   color: #333;
   line-height: 18px;
-  margin-bottom: 25px;
+  margin: 4px auto;
+}
+.textInfo{
+  font-size: 12px;
+  color: #333;
+  line-height: 18px;
 }
 .summary{
   font-size: 12px;
   color: #999;
   line-height: 18px;
-  margin-bottom: 25px;
+}
+.hiddenFor2line{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.min-height{
+  min-height:80vh;
+}
+.input{
+  line-height: 100%;
+  background-color: #fff!important;
+  content: "'fill'";
+  display: block;
+  width: 95%;
+  height: 20px;
+  border-radius: 4px 4px;
+  line-height: 32px;
+  font-size: 14px;
+  color: #4d4d4d;
+  border: 1px solid #ccc;
+  margin-bottom:10px;
+  padding: 8px 0px 8px 12px;
+}
+.textarea{
+  line-height: 100%;
+  background-color: #fff!important;
+  content: "'fill'";
+  display: block;
+  width: 95%;
+  border-radius: 4px 4px;
+  line-height: 32px;
+  font-size: 14px;
+  color: #4d4d4d;
+  border: 1px solid #ccc;
+  margin-bottom:10px;
+  padding: 8px 0px 8px 12px;
+}
+.btn{
+  line-height: 100%;
+  background-color: #0084ff!important;
+  content: "'fill'";
+  display: block;
+  height: 38px;
+  border-radius: 4px 4px;
+  line-height: 32px;
+  font-size: 14px;
+  color: #fff;
+  margin-bottom:10px;
+  margin-top:40px;
+  border:none;
+  padding: 0px 20px;
 }
 /* 布局 */
 html{
@@ -111,7 +210,7 @@ body{
 .container{
   display: flex;
   width: 1366px;
-  padding: 44px 24px 0px;
+  padding: 54px 24px 0px;
   margin: 0px auto 0px;
   /* min-width: 1000px; */
   /* height: 100%; */

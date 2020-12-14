@@ -1,0 +1,33 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/stylesheets/admin.css')
+  style(type="text/css").
+
+block content
+  div.container
+        div.main
+            h1 添加标签
+            div.tagList.div-box
+                p.title 标签列表
+                div
+                    //- a.ghostButton(href='/admin/createTag') 新建
+                //- each tag in tagList
+                //-     div.blogTitle
+                //-         span #{tag.title}
+                div
+                    //- a(href='/admin/editTag/'+tag.id) 编辑
+                    //- span |&nbsp;
+                    //- a(href='/admin/deleteTag/'+tag.id) 删除
+                    form(id="myForm-addTag" action method='post')
+                        each tag in tagList
+                            div
+                                input(type="radio" name="tagId" value=tag.id)
+                                span #{tag.title}
+                        div
+                            input(type='submit')
+block script
+    script.
+        var pathname=window.location.pathname;
+        //- alert(pathname)
+        $('#myForm-addTag').attr('action',pathname)

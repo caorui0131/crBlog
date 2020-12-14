@@ -3,42 +3,43 @@ extends layout
 block css
   link(rel='stylesheet', href='/stylesheets/edit.css')
 block content
-  div.main
-    h1= 编辑投票
-    div.common-mask-con
-      div(class="vote-content")
-        div(class="vote-content-title")
-          label 投票标题：
+  div.container
+    div.main
+      h1= 编辑投票
+      div.common-mask-con
+        div(class="vote-content")
+          div(class="vote-content-title")
+            label 投票标题：
+              div(class="vote-right")
+                textarea(placeholder="请输入标题")
+          div(class="vote-time")
+            label 截止日期：
             div(class="vote-right")
-              textarea(placeholder="请输入标题")
-        div(class="vote-time")
-          label 截止日期：
+              input(type="date" placeholder="请输入截止日期" id="asDate")
+          div(class="vote-content-choose")
+            label 选项设置：
           div(class="vote-right")
-            input(type="date" placeholder="请输入截止日期" id="asDate")
-        div(class="vote-content-choose")
-          label 选项设置：
-        div(class="vote-right")
-          div(class="vote-type")
-            //- select(name='vote-input-type')
-            //-   option(value="radio") 单选
-            //-   option(value="checkbox") 多选
-            //- select(name='vote-type-minnum')
-            //-   option(value="no") 至少选几项
-            //-   option(value="1") 至少选1项
-            //-   option(value="2") 至少选2项
-            //- select(name='vote-type-maxnum') 
-            //-   option(value="no") 最多选几项
-            //-   option(value="2") 最多选2项
-          ul(class="vote-content-options") 
-            li
-              input(type="text" placeholder="请填写选项内容") 
-              span(class="chice-add")  + 
-              span(class="chice-minus")  - 
-            li
-              input(type="text" placeholder="请填写选项内容") 
-              span(class="chice-add")  + 
-              span(class="chice-minus")  - 
-        div(class="vote-num-tip") 请至少保留1个选项
-      button 提交
+            div(class="vote-type")
+              //- select(name='vote-input-type')
+              //-   option(value="radio") 单选
+              //-   option(value="checkbox") 多选
+              //- select(name='vote-type-minnum')
+              //-   option(value="no") 至少选几项
+              //-   option(value="1") 至少选1项
+              //-   option(value="2") 至少选2项
+              //- select(name='vote-type-maxnum') 
+              //-   option(value="no") 最多选几项
+              //-   option(value="2") 最多选2项
+            ul(class="vote-content-options") 
+              li
+                input(type="text" placeholder="请填写选项内容") 
+                span(class="chice-add")  + 
+                span(class="chice-minus")  - 
+              li
+                input(type="text" placeholder="请填写选项内容") 
+                span(class="chice-add")  + 
+                span(class="chice-minus")  - 
+          div(class="vote-num-tip") 请至少保留1个选项
+        button 提交
 block script
   script(src='/javascripts/edit.js?version='+$version)

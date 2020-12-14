@@ -3,21 +3,36 @@ extends layout
 block css
   link(rel='stylesheet', href='/stylesheets/admin.css')
   style(type="text/css").
-    .tagList{
-    }
+
 block content
-  //- 管理中心
-  div.main
-    h1 管理中心
-    a(href='/admin/createBlog') 新建
-    div.blogList
-      each blog in blogList
-        div.blogItem
+  div.container
+    //- 管理中心
+    div.main
+      h1 管理中心
+      div.blogList.div-box
+        p.title 博客列表
+        div
+          a.ghostButton(href='/admin/createBlog') 新建
+        each blog in blogList
+          div.blogItem
+            div.blogTitle
+              a(href='/blog/detail/'+blog.id target="_blank") #{blog.title}
+            div.blogItem-edit
+              a(href='/admin/editBlog/'+blog.id).edit 编辑 
+              span |&nbsp;
+              a(href='/admin/deleteBlog/'+blog.id).delete 删除
+              span |&nbsp;
+              a(href='/admin/addTag/'+blog.id).addTag 添加标签
+      div.tagList.div-box
+        p.title 标签列表
+        div
+          a.ghostButton(href='/admin/createTag') 新建
+        each tag in tagList
           div.blogTitle
-            a(href='/blog/detail/'+blog.id target="_blank") #{blog.title}
-          div.blogItem-edit
-            a(href='/admin/editBlog/'+blog.id).edit 编辑 
+            span #{tag.title}
+          div
+            a(href='/admin/editTag/'+tag.id) 编辑
             span |&nbsp;
-            a(href='/admin/deleteBlog/'+blog.id).delete 删除
-            span |&nbsp;
-            a(href='/tag').addTag 添加标签
+            a(href='/admin/deleteTag/'+tag.id) 删除
+block script
+  script.

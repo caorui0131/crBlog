@@ -119,10 +119,37 @@ router.get('/deleteTag/:id',async function(req, res, next) {
       console.error(err);
       throw err;
     });
-    res.redirect('/tag');
+    res.redirect('/admin');
   }catch (e){
     console.log(e);
     throw e;
   }
 });
+router.get('/addTag/:id',async function(req, res, next) {
+  try{
+    var tagList= await db.selectTagList().catch((err) => {
+      console.error(err);
+      throw err;
+    });
+    res.render('addTag', {tagList });
+  }catch (e){
+    console.log(e);
+    throw e;
+  }
+});
+router.post('/addTag/:id',async function(req, res, next) {
+  try{
+    var blogId=req.params.id;
+    var tagId= req.body.tagId;
+    var data={
+      blogId:blogId,
+      tagId:tagId
+    };
+    res.redirect('/');
+  }catch (e){
+    console.log(e);
+    throw e;
+  }
+});
+
 module.exports = router;

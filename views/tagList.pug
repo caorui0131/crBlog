@@ -2,11 +2,22 @@ style(type="text/css").
     .tagList{
         
     }
+    .tagTitle{
+        display:inline-block;
+    }
+    .tagCount{
+        display:inline-block;
+        float:right;
+    }
 div.tagList.div-box
-    div 标签列表
-    ul
+    p.title 标签列表
+    div
         each tag in tagList
-            li #{tag.title}
+            div
+                span.tagTitle #{tag.title}
+                each countTagItem in countTagId
+                    -if(tag.id==countTagItem.tagId)
+                        span.tagCount.summary #{countTagItem.tagCount}篇
                 //- a(href='/admin/editTag/'+tag.id) 编辑
                 //- |&nbsp;
                 //- a(href='/admin/createTag') 添加

@@ -12,7 +12,15 @@ router.get('/',async function(req, res, next) {
     console.error(err);
     throw err;
   });
-  res.render('index', { blogList,tagList});
+  var blogTag= await db.selectBlogTag().catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  var countTagId= await db.countTagId().catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  res.render('index', { blogList,tagList,blogTag,countTagId});
 });
 
 router.get('/blog/detail/:id', async function(req, res, next) {
@@ -20,10 +28,14 @@ router.get('/blog/detail/:id', async function(req, res, next) {
   console.log(id);
   let blog = {};
   blog= await db.selectBlogDetail(id).catch((err) => {
-      console.error(err);
-      throw err;
+    console.error(err);
+    throw err;
   });
-  res.render('blogDetail', { blog });
+  var blogTag= await db.selectBlogTag().catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  res.render('blogDetail', { blog ,blogTag});
 });
 
 /* user页 */
@@ -35,7 +47,15 @@ router.get('/user/:id', async function(req, res, next) {
       console.error(err);
       throw err;
   });
-  res.render('author', { blogList });
+  var blogTag= await db.selectBlogTag().catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  // var countTagId= await db.countTagId().catch((err) => {
+  //   console.error(err);
+  //   throw err;
+  // });
+  res.render('author', { blogList,blogTag });
 });
 
 router.get('/login', async function(req, res, next) {

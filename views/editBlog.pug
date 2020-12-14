@@ -4,26 +4,26 @@ block css
 //-   link(rel='stylesheet', href='/stylesheets/admin.css')
 block content
     //- 编辑博客
-    - var url = ''
-    - var buttonText = ''
-    -if(blog&&blog[0].id)
-        -url='/admin/editBlog/'+blog[0].id
-        //- - buttonText = '更新博客'
-    -else
-        -url='/admin/createBlog'
-        //- - buttonText = '创建博客'
-    div
-        form(id="myForm" action=url method='post')
-            p 标题：
-            input(type="text" name="title" value=blog?blog[0].title:"")
-            p 内容：
-            input(type="text" name="content" value=blog?blog[0].content:"")
-            p 作者：
-            input(type="text" name="author" value=blog?blog[0].author:"")
-            input(type='submit')
-        //- button#editBlog(type="submit" value="submit"  onclick="formSubmit()") #{buttonText}
-//- block script
-//-     script.
-//-         function formSubmit(){
-//-             document.getElementById("myForm").submit();
-//-         }
+    div.container
+        div.main
+            div.div-box.min-height
+                - var url = ''
+                - var buttonText = ''
+                -if(blog&&blog[0].id)
+                    -url='/admin/editBlog/'+blog[0].id
+                    //- - buttonText = '更新博客'
+                -else
+                    -url='/admin/createBlog'
+                    //- - buttonText = '创建博客'
+                div
+                    form(id="myForm" action=url method='post')
+                        p 标题：
+                        input.input(type="text" name="title" value=blog?blog[0].title:"")
+                        p 内容：
+                        //- input(type="text" name="content" value=blog?blog[0].content:"")
+                        textarea.textarea(type="text" clos="50" rows="10"  name="content" value=blog?blog[0].content:"") #{blog?blog[0].content:""}
+                        p 作者：
+                        input.input(type="text" name="author" value=blog?blog[0].author:"")
+                        div
+                            input.btn(type='submit')
+        
