@@ -2,8 +2,12 @@
 div.header.box-shadow
     h1.title1(onclick="javascript:window.location.href='/'") #{title}
     //- p.login(onclick="javascript:window.location.href='/login'") 登录
-    a.login() 登录
-    p.loginusername
+    -if(currentUserName)
+        input(style='display:none;').currentUserName(value=currentUserName)
+        p.loginusername #{currentUserName}
+    -else
+        a.login() 登录
+    //- p.loginusername
     //-  <!-- 退出登录 -->
     div.loginhide
         input.logoutbtn(type="submit" value="退出登录" )
@@ -51,12 +55,20 @@ style.
 script(src="/javascripts/jquery.js")
 script.
     $(document).ready(function(){
+        var currentUserName=$('.currentUserName').val()
+        console.log('currentUserName:',currentUserName)
         //- 初始状态
         $(".loginusername").hide();
-        if(document.cookie){
-        //- console.log("getCookiename:",getCookie("name"));
+        //- if(document.cookie){
+        //- //- console.log("getCookiename:",getCookie("name"));
+        //-     $(".login").hide();
+        //-     //- $(".loginusername").html(getCookie("name2")).show();
+        //-     console.log('currentUserName2:',currentUserName)
+        //-     $(".loginusername").html(currentUserName).show();
+        //- }
+        if(currentUserName){
             $(".login").hide();
-            $(".loginusername").html(getCookie("name2")).show();
+            $(".loginusername").show();
         }
 
         // 定义取cookie函数

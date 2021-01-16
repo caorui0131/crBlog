@@ -36,6 +36,12 @@ function selectBlogList(){
         console.log(error);
         reject(error);
       } else {
+        // console.log('results:',results)
+        for(i=0;i<results.length;i++){
+          // console.log('results.createtime:',results[i].createtime)
+          // console.log('formatDate(results.createtime):',formatDate(results[i].createtime))
+          results[i].createtime=formatDate(results[i].createtime)
+        }
         resolve(results);
       }
     });
@@ -58,6 +64,7 @@ function selectBlogDetail(id){
 // 新建blog
 function createBlog(blog){
   return new Promise(function (resolve, reject) {
+    console.log('formatDate(new Date()):',formatDate(new Date()))
     connection.query('INSERT INTO blogs(title,content,createtime,author) VALUES("'+blog.title+'","'+blog.content+'","'+formatDate(new Date())+'","'+blog.author+'")', function (error, results, fields) {
       if (error) {
         reject(error);

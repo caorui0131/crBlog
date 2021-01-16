@@ -198,6 +198,12 @@ body{
   border:none;
   padding: 0px 20px;
 }
+.successContent{
+  color: #333;
+}
+.errorContent{
+  color: red;
+}
 /* 布局 */
 html{
   height: 100%;

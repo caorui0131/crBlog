@@ -20,7 +20,8 @@ router.get('/',async function(req, res, next) {
     console.error(err);
     throw err;
   });
-  res.render('index', { blogList,tagList,blogTag,countTagId});
+  var currentUserName=res.locals.currentUserName;
+  res.render('index', { blogList,tagList,blogTag,countTagId,currentUserName});
 });
 
 router.get('/blog/detail/:id', async function(req, res, next) {
@@ -83,7 +84,7 @@ router.post('/login', async function(req, res, next) {
   if(result&&result.length>0){
     // 同时设2个cookie，取前端能改的name2展示前端页面（改了也无所谓因为 取不到后端的值），取前端改不了的cookie的username查询用户列表
     res.cookie('name',result[0].username,{path:'/',expires: new Date(Date.now()+9000000),httpOnly:true})
-    res.cookie('name2',result[0].username,{path:'/',expires: new Date(Date.now()+9000000)})
+    // res.cookie('name2',result[0].username,{path:'/',expires: new Date(Date.now()+9000000)})
     res.json({code:200,successText:'登录成功!',backurl});
   }else{
     res.json({code:400,errMsg:'登录失败，请检查您的输入是否正确!'});
@@ -97,7 +98,7 @@ router.post("/logout",function(req, res, next){
   // res.cookie('name2','',{path:'/',expires: new Date(Date.now()-1000)})
   //删除Cookie  
   res.clearCookie('name');
-  res.clearCookie('name2');
+  // res.clearCookie('name2');
   res.json({code:200,successText:'退出登录成功!'});
 })
 
@@ -110,5 +111,18 @@ router.get('/tag',async function(req, res, next) {
   });
   res.render('tagList', { tagList});
 });
+
+//非数据库相关函数
+// 格式化时间
+function formatDate(date) {
+  var date = new Date(date);
+  var YY = date.getFullYear() + '-';
+  var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+  var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+  var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+  var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+  var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+  return YY + MM + DD + " " + hh + mm + ss;
+}
 
 module.exports = router;

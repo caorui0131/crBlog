@@ -14,7 +14,7 @@ router.get('/',async function(req, res, next) {
   res.render('admin', { blogList,tagList });
 });
 router.get('/createBlog', async function(req, res, next) {
-  res.render('editBlog', {  });
+  res.render('editBlog', {  url:'/admin/createBlog'});
 });
 // router.post('/editBlog',async function(req, res, next) {
 //   blogList= await db.selectBlogList().catch((err) => {
@@ -29,10 +29,26 @@ router.post('/createBlog',async function(req, res, next) {
     content: req.body.content,
     author:req.body.author
   }
-  await db.createBlog(blog).catch((err) => {
+  if(blog.title.length>256){
+    res.render('editBlog',{blog,errorContent:"标题长度不能超过256字"})
+  }
+  if(blog.author.length>20){
+    res.render('editBlog',{blog,errorContent:"作者长度不能超过20字"})
+  }
+  var results=await db.createBlog(blog).catch((err) => {
     console.error(err);
     throw err;
   });
+  console.log('results:',results)
+  
+  if(results.affectedRows&&results.affectedRows>0){
+    // express如何在res.redirect的同时返回数据
+    // res.send({successContent:'新建文章成功！'})
+    // res.json({successContent:'新建文章成功！'})
+    res.redirect('/admin')
+  }else{
+    res.render('editBlog',{blog,errorContent:"新建文章失败，请稍后再试！"})
+  }
   // res.render('admin', {  });
 });
 router.get('/editBlog/:id', async function (req, res, next) {
@@ -42,7 +58,12 @@ router.get('/editBlog/:id', async function (req, res, next) {
     console.error(err);
     throw err;
   });
-  res.render('editBlog', { blog });
+  if(blog.length<1){
+    var err= new Error("未获得blog，id:"+id); 
+    console.error(err);
+    throw err;
+  }
+  res.render('editBlog', { blog:blog[0],url:'/admin/editBlog/'+blog.id});
 });
 router.post('/editBlog/:id', async function (req, res, next) {
   let id = req.params.id;

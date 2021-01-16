@@ -11,8 +11,10 @@ block content
       ul.nav
         li.nav-item.active 
           a 博客
-        li.nav-item 
-          a(href='/admin') 管理
+        -if(currentUserName)
+          li.nav-item 
+            a(href='/admin') 管理
+      div(style="display: none;") #{currentUserName}
       div.blogList.box-shadow
         include ./include/blog.pug
         //- each blog in blogList

@@ -22,12 +22,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
+app.use(function(req,res,next){
+  var userName=req.cookies.name;
+  // 在本次会话创建一个全局变量
+  res.locals.currentUserName=userName;
+  next();
+})
 app.use('/', indexRouter);
 app.use('/admin',function(req, res, next){
-  userName=req.cookies.name;
-  console.log("userName:",userName&&userName.length>0);
-  if(userName&&userName.length>0){
+  // var userName=req.cookies.name;
+  // console.log("userName:",userName&&userName.length>0);
+  if(res.locals.currentUserName&&res.locals.currentUserName.length>0){
     next();
     return;
   }
