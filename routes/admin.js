@@ -14,7 +14,7 @@ router.get('/',async function(req, res, next) {
   res.render('admin', { blogList,tagList });
 });
 router.get('/createBlog', async function(req, res, next) {
-  res.render('editBlog', {  url:'/admin/createBlog'});
+  res.render('editBlog', {  url:'/admin/createBlog',buttonText:'新建博客'});
 });
 // router.post('/editBlog',async function(req, res, next) {
 //   blogList= await db.selectBlogList().catch((err) => {
@@ -30,12 +30,13 @@ router.post('/createBlog',async function(req, res, next) {
     author:req.body.author
   }
   if(blog.title.length>256){
-    res.render('editBlog',{blog,errorContent:"标题长度不能超过256字"})
+    res.json({status: 500,blog,errorContent:"标题长度不能超过256字"})
   }
   if(blog.author.length>20){
-    res.render('editBlog',{blog,errorContent:"作者长度不能超过20字"})
+    res.json({status: 500,blog,errorContent:"作者长度不能超过20字"})
   }
   var results=await db.createBlog(blog).catch((err) => {
+    res.json({status: 500,errorContent:'修改博客失败，请稍后再试！'});
     console.error(err);
     throw err;
   });
@@ -43,11 +44,10 @@ router.post('/createBlog',async function(req, res, next) {
   
   if(results.affectedRows&&results.affectedRows>0){
     // express如何在res.redirect的同时返回数据
-    // res.send({successContent:'新建文章成功！'})
-    // res.json({successContent:'新建文章成功！'})
-    res.redirect('/admin')
+    // res.redirect('/admin')
+    res.json({status: 200,successContents:'新建博客成功！'});
   }else{
-    res.render('editBlog',{blog,errorContent:"新建文章失败，请稍后再试！"})
+    res.json({status: 500,errorContent:'修改博客失败，请稍后再试！'});
   }
   // res.render('admin', {  });
 });
@@ -63,7 +63,7 @@ router.get('/editBlog/:id', async function (req, res, next) {
     console.error(err);
     throw err;
   }
-  res.render('editBlog', { blog:blog[0],url:'/admin/editBlog/'+blog.id});
+  res.render('editBlog', { blog:blog[0],url:'/admin/editBlog/'+id,buttonText:'更新博客'});
 });
 router.post('/editBlog/:id', async function (req, res, next) {
   let id = req.params.id;
@@ -73,13 +73,24 @@ router.post('/editBlog/:id', async function (req, res, next) {
     content: req.body.content,
     author:req.body.author
   }
+  if(blog.title.length>256){
+    res.json({status: 500,blog,errorContent:"标题长度不能超过256字"})
+  }
+  if(blog.author.length>20){
+    res.json({status: 500,blog,errorContent:"作者长度不能超过20字"})
+  }
   blog = await db.updateBlog(blog).catch((err) => {
+    res.json({status: 500,errorContent:'修改博客失败，请稍后再试！'});
     console.error(err);
     throw err;
   });
-  // res.render('editBlog', { blog });
-  // res.send(id);
-  res.redirect('/admin/editBlog/'+id);
+  // form表单同步方式：
+  // res.redirect('/admin/editBlog/'+id);
+  // AJAX异步方式：
+  // res.render('editBlog', { blog,successContents:'修改博客成功！' });
+  // res.json({ status: 200, successText: '修改博客成功！' });
+  res.json({status: 200,successContents:'修改博客成功！'});
+  
 });
 router.get('/deleteBlog/:id',async function(req, res, next) {
   try{

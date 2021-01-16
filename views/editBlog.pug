@@ -7,14 +7,15 @@ block content
     div.container
         div.main
             div.div-box.min-height
-                - var url = ''
-                - var buttonText = ''
+                //- - var url = ''
+                //- - var buttonText = ''
                 //- -if(blog&&blog.id)
                 //-     -url='/admin/editBlog/'+blog.id
                 //-     //- - buttonText = '更新博客'
                 //- -else
                 //-     -url='/admin/createBlog'
                 //-     //- - buttonText = '创建博客'
+                input(style='display:none;').url(value=url)
                 div
                     form(id="myForm" action=url method='post')
                         p 标题：
@@ -24,12 +25,41 @@ block content
                         textarea.textarea(type="text" clos="50" rows="10"  name="content" value=blog?blog.content:"") #{blog?blog.content:""}
                         p 作者：
                         //- input.input(type="text" name="author" value=blog?blog.author:"")
-                        input.input(type="text" name="author" disabled ='disabled' value=blog?blog.author:currentUserName)
+                        input.input(type="text" name="author" disabled='disabled' value=blog?blog.author:currentUserName)
                         
                         div
                             -if(successContent)
                                 p.successContent #{successContent}
                             -if(errorContent)
                                 p.errorContent #{errorContent}
-                            input.btn(type='submit')
+                            //- input.btn(type='submit')
+                    button.btn #{buttonText}
+    script.
+        (function(){
+            $('.btn').click(function(){
+                $.ajax({
+                    type:'post',
+                    url:$('.url').val(),
+                    data:{
+                        title:$('input[name="title"]').val(),
+                        content:$('textarea[name="content"]').val(),
+                        author:$('input[name="author"]').val()
+                        //- author:currentUserName
+                    },
+                    dataType: 'json',
+                    success:function(data){
+                        if(data.status==200){
+                            alert(data.successContents)
+                            setTimeout(function(){
+                                window.location.href='/admin'
+                            },500)
+                        }else{
+                            alert(data.errorContent)
+                        }
+                        
+                    }
+                })
+            })
+        }());
+        
         
