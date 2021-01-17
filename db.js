@@ -29,9 +29,13 @@ function formatDate(date) {
 
 // blogs表
 // 查询bloglist
-function selectBlogList(){
+function selectBlogList(tagidCode){
   return new Promise(function (resolve, reject) {
-    connection.query('SELECT * from blogs', function (error, results, fields) {
+    var whereSql = "";
+    if(tagidCode && tagidCode!=''){
+      whereSql += " AND blogs.tagId = "+tagidCode;
+    }
+    connection.query('SELECT * from blogs where 1=1'+whereSql, function (error, results, fields) {
       if (error) {
         console.log(error);
         reject(error);
@@ -227,7 +231,21 @@ function countTagId(){
   });
 };
 
-// 查询tag在blog中绑定的次数
+// 查询tag绑定的blog
+function selectTagIdOfBlogs(tagidCode){
+  return new Promise(function (resolve, reject) {
+    connection.query('SELECT *  FROM blog.blogs  where blogs.tagId = '+tagidCode, function (error, results, fields) {
+      if (error) {
+        reject(error);
+      } else {
+        // console.log(results);
+        resolve(results);
+      }
+    });
+  });
+};
+
+// 给blog绑定tag
 function addBlogTag(data){
   return new Promise(function (resolve, reject) {
     connection.query('UPDATE blogs SET tagId = '+data.tagId+' where id = '+data.blogId, function (error, results, fields) {
@@ -259,6 +277,7 @@ module.exports = {
   deleteTag,
   selectBlogTag,
   countTagId,
+  selectTagIdOfBlogs,
   addBlogTag
 
 };

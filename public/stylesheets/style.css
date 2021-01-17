@@ -81,9 +81,12 @@ body{
   /* vertical-align: middle; */
 }
 .active{
-  color: #0084ff;
+  color: #0084ff !important;
   border-color: #0084ff;
   border-bottom: 1px #0084ff solid;
+}
+.active-a{
+  color: #0084ff !important;
 }
 .nav-item{
   margin: 0 26px;

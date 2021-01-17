@@ -12,9 +12,10 @@ style(type="text/css").
 div.tagList.div-box
     p.title 标签列表
     div
+        a.tagTitle(target='_self' href='/' class=tagidCode?'':'active-a') 全部
         each tag in tagList
             div
-                span.tagTitle #{tag.title}
+                a.tagTitle(target='_self' href='?tagidCode='+tag.id class=tagidCode==tag.id?'active-a':'') #{tag.title}
                 each countTagItem in countTagId
                     -if(tag.id==countTagItem.tagId)
                         span.tagCount.summary #{countTagItem.tagCount}篇

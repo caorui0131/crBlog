@@ -4,10 +4,25 @@ var db = require('../db');
 
 /* blog页 */
 router.get('/',async function(req, res, next) {
-  var blogList= await db.selectBlogList().catch((err) => {
+  // tagidCode：标签列表高亮
+  var tagidCode=req.query.tagidCode;
+  console.log('tagidCode:',tagidCode)
+  var blogList= await db.selectBlogList(tagidCode).catch((err) => {
     console.error(err);
     throw err;
   });
+  // if(tagidCode){
+  //   var blogList= await db.selectTagIdOfBlogs(tagidCode).catch((err) => {
+  //     console.error(err);
+  //     throw err;
+  //   });
+  // }else{
+  //   var blogList= await db.selectBlogList().catch((err) => {
+  //     console.error(err);
+  //     throw err;
+  //   });
+  // }
+  
   var tagList= await db.selectTagList().catch((err) => {
     console.error(err);
     throw err;
@@ -21,7 +36,7 @@ router.get('/',async function(req, res, next) {
     throw err;
   });
   var currentUserName=res.locals.currentUserName;
-  res.render('index', { blogList,tagList,blogTag,countTagId,currentUserName});
+  res.render('index', { blogList,tagList,blogTag,countTagId,currentUserName,tagidCode});
 });
 
 router.get('/blog/detail/:id', async function(req, res, next) {
@@ -104,14 +119,26 @@ router.post("/logout",function(req, res, next){
 
 
 // tags页
-router.get('/tag',async function(req, res, next) {
-  var tagList= await db.selectTagList().catch((err) => {
-    console.error(err);
-    throw err;
-  });
-  res.render('tagList', { tagList});
-});
+// router.get('/tag',async function(req, res, next) {
+//   var tagList= await db.selectTagList().catch((err) => {
+//     console.error(err);
+//     throw err;
+//   });
+//   res.render('tagList', { tagList});
+// });
 
+// tags页
+// router.get('/tag/:tagId',async function(req, res, next) {
+//   let tagId = req.params.tagId || '';
+//   console.log(tagId);
+//   var tagList= await db.selectTagIdOfBlogs(tagId).catch((err) => {
+//     console.error(err);
+//     throw err;
+//   });
+ 
+//   // res.render('tagList', { tagList});
+//   res.json({status: 500,tagList,errorContent:"标题长度不能超过256字"})
+// });
 //非数据库相关函数
 // 格式化时间
 function formatDate(date) {
