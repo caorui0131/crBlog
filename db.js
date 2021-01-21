@@ -1,13 +1,29 @@
 var mysql = require('mysql');//从node_modules中引入包
+const config = require('./config')
 
-var connection = mysql.createConnection({//创建一个mysql链接对象
-  host     : 'localhost',
-  port     : 3306,
-  user     : 'root',
-  password : 'Cr18811657411',
-  database : 'blog'
-});
- 
+var connection = mysql.createConnection(config.blogMysql);
+
+// if(config.env=='development'){
+//   var connection = mysql.createConnection({//创建一个mysql链接对象
+//     host     : 'localhost',
+//     port     : 3306,
+//     user     : 'root',
+//     password : 'Cr18811657411',
+//     database : 'blog'
+//   });
+// }else{
+//   var connection = mysql.createConnection({//创建一个mysql链接对象
+//     host     : 'rm-8vbxh2o8a651reb5m3o.mysql.zhangbei.rds.aliyuncs.com',
+//     port     : 3306,
+//     user     : 'caorui',
+//     password : 'wftest@231',
+//     database : 'blog'
+//   });
+// }
+
+
+
+
 connection.connect();//开始链接
 // 查询mysql中的数据-测试
 // connection.query('SELECT * from blogs', function (error, results, fields) {
