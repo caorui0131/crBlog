@@ -6,7 +6,6 @@ var db = require('../db');
 router.get('/',async function(req, res, next) {
   // tagidCode：标签列表高亮
   var tagidCode=req.query.tagidCode;
-  console.log('tagidCode:',tagidCode)
   var blogList= await db.selectBlogList(tagidCode).catch((err) => {
     console.error(err);
     throw err;

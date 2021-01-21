@@ -173,10 +173,15 @@ router.post('/addTag/:id',async function(req, res, next) {
   try{
     var blogId=req.params.id;
     var tagId= req.body.tagId;
+    console.log('tagIdtagId:',tagId)
     var data={
       blogId:blogId,
       tagId:tagId
     };
+    await db.addBlogTag(data).catch((err) => {
+      console.error(err);
+      throw err;
+    });
     res.redirect('/');
   }catch (e){
     console.log(e);
