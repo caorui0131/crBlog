@@ -2,53 +2,52 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db');
 
-
 /* blog页 */
+// router.get('/',async function(req, res, next) {
+//   res.send( {status:200});
+// });
+
 router.get('/',async function(req, res, next) {
-  // var isMobileOrPC=res.locals.isMobileOrPC
-  // if(res.locals.isMobileOrPC=="Mobile"){
-  //   res.redirect('/mobile')
-  // }else{
-    // tagidCode：标签列表高亮
-    var tagidCode=req.query.tagidCode;
-    var data={
+  // tagidCode：标签列表高亮
+  var tagidCode=req.query.tagidCode;
+  var data={
       tagidCode:tagidCode
     }
-    var blogList= await db.selectBlogList(data).catch((err) => {
-      console.error(err);
-      throw err;
-    });
-    // if(tagidCode){
-    //   var blogList= await db.selectTagIdOfBlogs(tagidCode).catch((err) => {
-    //     console.error(err);
-    //     throw err;
-    //   });
-    // }else{
-    //   var blogList= await db.selectBlogList().catch((err) => {
-    //     console.error(err);
-    //     throw err;
-    //   });
-    // }
-    
+  var blogList= await db.selectBlogList(data).catch((err) => {
+    console.error(err);
+    throw err;
+  });
 
-    var blogTag= await db.selectBlogTag().catch((err) => {
-      console.error(err);
-      throw err;
-    });
-    var tagList= await db.selectTagList().catch((err) => {
-      console.error(err);
-      throw err;
-    });
-    var countTagId= await db.countTagId().catch((err) => {
-      console.error(err);
-      throw err;
-    });
-    var currentUserName=res.locals.currentUserName;
-    res.render('index', { blogList,tagList,blogTag,countTagId,currentUserName,tagidCode});
+  // if(tagidCode){
+  //   var blogList= await db.selectTagIdOfBlogs(tagidCode).catch((err) => {
+  //     console.error(err);
+  //     throw err;
+  //   });
+  // }else{
+  //   var blogList= await db.selectBlogList().catch((err) => {
+  //     console.error(err);
+  //     throw err;
+  //   });
   // }
+  
+
+  var blogTag= await db.selectBlogTag().catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  var tagList= await db.selectTagList().catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  var countTagId= await db.countTagId().catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  var currentUserName=res.locals.currentUserName;
+  res.render('index', { blogList,tagList,blogTag,countTagId,currentUserName,tagidCode});
 });
 
-router.get('/blog/detail/:userId', async function(req, res, next) {
+router.get('/blog/detail/:id', async function(req, res, next) {
   let id = req.params.id || '';
   console.log(id);
   let blog = {};
@@ -64,47 +63,30 @@ router.get('/blog/detail/:userId', async function(req, res, next) {
 });
 
 /* user页 */
-router.get('/user/:userId', async function(req, res, next) {
-  // 如何在Express中获取完整的URL？
-  // var port = req.app.settings.port || cfg.port;
-  // console.log('2222222:',req.protocol + '://' + req.hostname  + ( port == 80 || port == 443 ? '' : ':'+port ) + req.path);
-  console.log('2222222:',req.path);
-  var tagidCode=req.query.tagidCode;
-  let userId = req.params.userId|| '';
-  var data={
-    userId:"'"+userId+"'",
-    tagidCode:tagidCode
-  }
-  var blogList= await db.selectBlogList(data).catch((err) => {
-    console.error(err);
-    throw err;
+router.get('/user/:id', async function(req, res, next) {
+  let id = req.params.id || '';
+  var blogList= await db.selectUser(id).catch((err) => {
+      console.error(err);
+      throw err;
   });
   var blogTag= await db.selectBlogTag().catch((err) => {
     console.error(err);
     throw err;
   });
-  var tagList= await db.selectTagList(data).catch((err) => {
+  var tagList= await db.selectTagList().catch((err) => {
     console.error(err);
     throw err;
   });
-  var countTagId= await db.countTagId(data).catch((err) => {
+  var countTagId= await db.countTagId().catch((err) => {
     console.error(err);
     throw err;
   });
-  res.render('author', { blogList,blogTag,tagList,countTagId });
+  // var countTagId= await db.countTagId().catch((err) => {
+  //   console.error(err);
+  //   throw err;
+  // });
+  res.render('author', { blogList,blogTag ,tagList,countTagId});
 });
-
-// // user页面
-// router.get('/user/:userId', async function(req, res, next) {
-//   var userId = req.query.userId;
-//   var userBlogList= await db.selectBlogList(userId).catch((err) => {
-//     console.error(err);
-//     throw err;
-//   });
-//   console.log('userBlogList:',userBlogList)
-//   // res.render('user', userBlogList);
-// });
-
 
 router.get('/login', async function(req, res, next) {
   console.log('login');
@@ -183,5 +165,6 @@ function formatDate(date) {
   var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
   return YY + MM + DD + " " + hh + mm + ss;
 }
+
 
 module.exports = router;

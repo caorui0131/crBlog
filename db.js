@@ -45,18 +45,24 @@ function formatDate(date) {
 
 // blogs表
 // 查询bloglist
-function selectBlogList(tagidCode){
+function selectBlogList(data){
+  var tagidCode=data.tagidCode;
+  var userId=data.userId;
+  // console.log('tagidCode:',tagidCode)
+  // console.log('userId:',userId)
   return new Promise(function (resolve, reject) {
     var whereSql = "";
     if(tagidCode && tagidCode!=''){
       whereSql += " AND blogs.tagId = "+tagidCode;
+    }
+    if(userId && userId!=''){
+      whereSql += " AND blogs.author = "+userId;
     }
     connection.query('SELECT * from blogs where 1=1'+whereSql, function (error, results, fields) {
       if (error) {
         console.log(error);
         reject(error);
       } else {
-        // console.log('results:',results)
         for(i=0;i<results.length;i++){
           // console.log('results.createtime:',results[i].createtime)
           // console.log('formatDate(results.createtime):',formatDate(results[i].createtime))
@@ -152,9 +158,13 @@ function checkLogin(data){
 
 // tags表
 // 查询taglist
-function selectTagList(){
+function selectTagList(data){
   return new Promise(function (resolve, reject) {
-    connection.query('SELECT * from tags', function (error, results, fields) {
+    var whereSql ='';
+    if(data&&data.userId&&data.userId!=''){
+      whereSql+=' AND blogs.author ='+data.userId;
+    }
+    connection.query('SELECT tags.id,tags.title FROM blog.tags,blog.blogs where 1=1 AND blogs.tagId=tags.id'+whereSql+' GROUP BY tags.id', function (error, results, fields) {
       if (error) {
         console.log(error);
         reject(error);
@@ -234,9 +244,13 @@ function selectBlogTag(){
 };
 
 // 查询tag在blog中绑定的次数
-function countTagId(){
+function countTagId(data){
   return new Promise(function (resolve, reject) {
-    connection.query('SELECT tagId,COUNT(tagId) as tagCount FROM blog.blogs GROUP BY tagId', function (error, results, fields) {
+    var whereSql='';
+    if (data&&data.userId&&data.userId!=''){
+      whereSql+=' AND blogs.author ='+data.userId;
+    }
+    connection.query('SELECT tagId,COUNT(tagId) as tagCount FROM blog.tags,blog.blogs where 1=1 AND blogs.tagId=tags.id '+whereSql+' GROUP BY tagId', function (error, results, fields) {
       if (error) {
         reject(error);
       } else {
@@ -268,7 +282,7 @@ function addBlogTag(data){
       if (error) {
         reject(error);
       } else {
-        console.log(results);
+        // console.log(results);
         resolve(results);
       }
     });

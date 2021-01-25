@@ -1,58 +1,25 @@
-
-div.header.box-shadow
-    h1.title1(onclick="javascript:window.location.href='/'") #{title}
-    //- p.login(onclick="javascript:window.location.href='/login'") 登录
-    -if(currentUserName)
-        input(style='display:none;').currentUserName(value=currentUserName)
-        p.loginusername #{currentUserName}
-    -else
-        a.login() 登录
-    //- p.loginusername
-    //-  <!-- 退出登录 -->
-    div.loginhide
-        input.logoutbtn(type="submit" value="退出登录" )
-style.
-    .header{
-        position: fixed;
-        display: block;
-        width:100%;
-        height:44px;
-        line-height: 44px;
-        background:#fff;
-        z-index:101;
-    }
-    .title1{
-        float:left;
-        text-align:center;
-        vertical-align: middle;
-        color:white;margin:0 10px;
-    }
-    .login,.loginusername{
-        float:right;
-        color:#333;
-        font-size:14px;
-        margin-right:10px;
-        height:40px;
-    }
-    .loginhide{
-        box-shadow: darkgrey 10px 10px 30px 5px ;
-        z-index: 3;
-        height: 120px;
-        width: 100px;
-        background-color: #ffffff;
-        position: absolute;
-        top:3%;
-        right:1.5%;
-        display: none;
-    }
-    .logoutbtn{
-        width: 80px;
-        background-color: #868080;
-        position: relative;
-        top:20%;
-        left:15%;
-    }
-script(src="/javascripts/jquery.js")
+link(rel='stylesheet', href='/stylesheets/header.css')
+div.header-container.box-shadow
+    div.container-title
+        div.header-logo-container
+            h1.title1(onclick="javascript:window.location.href='/'") 博客
+        div.header-nav-container
+            a.btnImportant-1(href='/admin' target='_blank') 创作中心
+        div.header-btn-container
+            -if(currentUserName)
+                input(style='display:none;').currentUserName(value=currentUserName)
+                p.loginusername #{currentUserName}
+            -else
+                a.login() 登录
+        //- p.loginusername
+        //-  <!-- 退出登录 -->
+        div.loginhide.box-shadow
+            input.logoutbtn(type="submit" value="退出登录" )
+    
+-if(isMobileOrPC=='Mobile')
+    script(src='/javascripts/mobile/common/zepto.js')
+-else
+    script(src="/javascripts/jquery.js")
 script.
     $(document).ready(function(){
         var currentUserName=$('.currentUserName').val()

@@ -1,6 +1,6 @@
 style(type="text/css").
     .tagList{
-        
+        width: 300px;
     }
     .tagTitle{
         display:inline-block;
@@ -12,7 +12,7 @@ style(type="text/css").
 div.tagList.div-box
     p.title 标签列表
     div
-        a.tagTitle(target='_self' href='/' class=tagidCode?'':'active-a') 全部
+        a.tagTitle(target='_self' href=path class=tagidCode?'':'active-a') 全部
         each tag in tagList
             div
                 a.tagTitle(target='_self' href='?tagidCode='+tag.id class=tagidCode==tag.id?'active-a':'') #{tag.title}

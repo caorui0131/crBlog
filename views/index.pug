@@ -1,7 +1,10 @@
 extends layout
 
 block css
-  link(rel='stylesheet', href='/stylesheets/index.css')
+  -if(isMobileOrPC=='Mobile')
+    link(rel='stylesheet', href='/stylesheets/mobile/index.css')
+  -else
+    link(rel='stylesheet', href='/stylesheets/index.css')
 block content
   //- 首页
   div.container
@@ -10,10 +13,7 @@ block content
       //- div.nav
       ul.nav
         li.nav-item.active 
-          a 博客
-        -if(currentUserName)
-          li.nav-item 
-            a(href='/admin') 管理
+          a 所有
       div(style="display: none;") #{currentUserName}
       div.blogList.box-shadow
         include ./include/blog.pug
@@ -25,12 +25,16 @@ block content
         //-       -if(blog.id==blogTagItem.id)
         //-         span.blogTagItem #{blogTagItem.tagTitle}
         //-     div.blogItem-info
-        //-       p.text.hiddenFor2line #{blog.content}
+        //-       p.text.overhidden2 #{blog.content}
         //-       a.author.textInfo(href='/user/'+blog.author target="_blank") #{blog.author}&nbsp;
         //-       span.summary #{blog.createtime}
       div.footer
         div.copyright-box.div-box
           p ©2020-2021 xxxx
     div.aside
-      include ./tagList.pug
-
+      include ./tagList-less.pug
+block script
+  -if(isMobileOrPC=='Mobile')
+    script(src='/javascripts/mobile/index.js')
+  -else
+    script(src='/javascripts/index.js')

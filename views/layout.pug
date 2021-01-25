@@ -2,11 +2,29 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    -if(isMobileOrPC=='Mobile')
+      meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,viewport-fit=cover")
+      meta(http-equiv="X-UA-Compatible",content="text/html; charset=UTF-8")
+      meta(name="baidu-site-verification",content="fNgFSqsWet")
+      meta(name="apple-mobile-web-app-capable" content="yes")
+      meta(name="referrer" content="never")
+      link(rel='stylesheet', href='/stylesheets/mobile/style.css')
+    -else
+      link(rel='stylesheet', href='/stylesheets/style.css')
     block css
   body
     include header.pug
     block content
-    script(src="/javascripts/jquery.js")
-    script(src='/javascripts/index.js')
+    -if(isMobileOrPC=='Mobile')
+      script(src='/javascripts/mobile/common/zepto.js')
+      //- script(src='/javascripts/mobile/common/flexible.js')
+      //- script(src='/javascripts/mobile/common/common.js')
+      //- script(src='/javascripts/mobile/common/overflowhidden.js') 
+      //- script(src='/javascripts/mobile/common/isIosOrAndroid.js')
+      //- script(src='/javascripts/mobile/common/appUtils.js')
+      //- script(src='/javascripts/mobile/debugger.js')
+      script(src='/javascripts/index.js')
+    -else
+      script(src="/javascripts/jquery.js")
+      script(src='/javascripts/index.js')
     block script

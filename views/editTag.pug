@@ -12,12 +12,12 @@ block content
                 -if(tag)
                     h1 编辑标签列表
                     form(method='post' action='/admin/updateTag/'+tag[0].id)
-                        p 标签名称
-                        input.input(type='text' name='title'  value=tag[0].title) 
-                        input.btn(type='submit')
+                      p 标签名称
+                      input.input(type='text' name='title'  value=tag[0].title) 
+                      input.btn(type='submit')
                 -else
                     h1 新建标签列表
                     form(method='post' action='/admin/createTag')
-                        p 标签名称
-                        input.input(type='text' name='title') 
-                        input.btn(type='submit')
+                      p 标签名称
+                      input.input(type='text' name='title') 
+                      input.btn(type='submit')

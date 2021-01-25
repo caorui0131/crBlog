@@ -1,15 +1,21 @@
 extends layout
 
 block content
-    div.container
-        div.main
-            div.div-box.min-height
-              h1.title-article 作者主页
-              div.blogList
-                include ./include/blog.pug
-                //- each blog in blogList
-                //-   div.blogItem
-                //-     a.title(href='/blog/detail/'+blog.id target="_blank") #{blog.title}
-                //-     div.blogItem-info
-                //-       a.author.textInfo(href='/user/'+blog.author target="_blank") #{blog.author}&nbsp;
-                //-       span.summary #{blog.createtime}
+  div.container
+    div.div-box
+    div.main
+      ul.nav
+        li.nav-item.active 
+          a 所有
+      div.min-height.div-box
+        //- h1.title-article 作者主页
+        div.blogList
+          include ./include/blog.pug
+          //- each blog in blogList
+          //-   div.blogItem
+          //-     a.title(href='/blog/detail/'+blog.id target="_blank") #{blog.title}
+          //-     div.blogItem-info
+          //-       a.author.textInfo(href='/user/'+blog.author target="_blank") #{blog.author}&nbsp;
+          //-       span.summary #{blog.createtime}
+    div.aside
+      include ./tagList.pug

@@ -1,0 +1,30 @@
+style(type="text/css").
+    .tagList{
+        width: 84px;
+        text-align: center;
+    }
+    .tagTitle{
+        display:inline-block;
+        margin-bottom: 8px;
+        padding: 8px 0;
+    }
+    .tagCount{
+        display:inline-block;
+        float:right;
+    }
+div.tagList.div-box
+    div
+        //- a.tagTitle(target='_self' href='/' class=tagidCode?'':'active-button') 推荐
+        a.tagTitle(target='_self' href='/' class=tagidCode?'':'active-button') 全部
+        each tag in tagList
+            div
+                a.tagTitle(target='_self' href='?tagidCode='+tag.id class=tagidCode==tag.id?'active-button':'') #{tag.title}
+                //- each countTagItem in countTagId
+                //-     -if(tag.id==countTagItem.tagId)
+                //-         span.tagCount.summary #{countTagItem.tagCount}篇
+                //- a(href='/admin/editTag/'+tag.id) 编辑
+                //- |&nbsp;
+                //- a(href='/admin/createTag') 添加
+                //- |&nbsp;
+                //- a(href='/admin/deleteTag/'+tag.id) 删除
+            
