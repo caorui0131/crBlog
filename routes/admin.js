@@ -3,7 +3,14 @@ var router = express.Router();
 var db = require('../db');
 
 router.get('/',async function(req, res, next) {
-  blogList= await db.selectBlogList().catch((err) => {
+  var tagidCode=req.query.tagidCode|| '';
+  var userId = req.params.userId|| '';
+  var userId = res.locals.currentUserName;
+  var data={
+    userId:"'"+userId+"'",
+    tagidCode:tagidCode
+  }
+  blogList= await db.selectBlogList(data).catch((err) => {
     console.error(err);
     throw err;
   });
@@ -163,6 +170,7 @@ router.get('/addTag/:id',async function(req, res, next) {
       console.error(err);
       throw err;
     });
+    // console.log(tagList)
     res.render('addTag', {tagList });
   }catch (e){
     console.log(e);

@@ -2,6 +2,7 @@ extends layout
 
 block css
   link(rel='stylesheet', href='/stylesheets/index.css')
+  link(rel='stylesheet', href='/stylesheets/userInfo.css')
   style(type="text/css").
     .blogItem-info{
         margin-bottom:20px;
@@ -10,16 +11,26 @@ block content
     div.container
         div.main
             div.div-box.min-height
-                h1.title-article #{blog[0].title}
+                h1.title-article #{blog.title}
                 div.blogItem
                     div.blogItem-info
-                        a.author.textInfo(href='/user/'+blog[0].author target="_blank") #{blog[0].author}&nbsp;
-                        span.summary #{blog[0].createtime}
+                        a.author.textInfo(href='/user/'+blog.author target="_blank") #{blog.author}&nbsp;
+                        span.summary #{blog.createtime}
                         div
                             span.summary 标签：
                             //- 展示博客对应的标签
                             each blogTagItem in blogTag
-                                -if(blog[0].id==blogTagItem.id)
+                                -if(blog.id==blogTagItem.id)
                                     span.blogTagItem #{blogTagItem.tagTitle}
                     div.blogItem-content
-                        p.text #{blog[0].content}
+                        p.text #{blog.content}
+        div.aside 
+            div.div-box.user-info
+                div.user-info-left
+                    img
+                    p.realname.strong #{userInfo.realname}
+                div.user-info-center
+                    p.strong-summary 个人简介：#{userInfo.introduction}
+                div.user-info-right
+                    include ./include/userInfo.pug
+        

@@ -13,6 +13,7 @@ div.tagList.div-box
     p.title 标签列表
     div
         a.tagTitle(target='_self' href=path class=tagidCode?'':'active-a') 全部
+        span.tagCount.summary #{blogListCount}篇
         each tag in tagList
             div
                 a.tagTitle(target='_self' href='?tagidCode='+tag.id class=tagidCode==tag.id?'active-a':'') #{tag.title}

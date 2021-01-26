@@ -46,6 +46,7 @@
     display:flex;
     justify-content: flex-end;
     align-items: center;
+    position: relative;
 }
 .btnImportant-1 {
     display: inline-block;
@@ -71,15 +72,19 @@
     width: 100px;
     background-color: #ffffff;
     position: absolute;
-    top:80%;
+    top:70%;
     right:0%;
     display: none;
+    padding: 20px 10px;
+    border-radius: 2px;
+    text-align: center;
 }
 .logoutbtn{
-    width: 80px;
+    /* width: 80px; */
     /* position: relative;
     top:20%;
     left:15%; */
     border:none;
     background-color: #fff;
+    cursor: pointer;
 }

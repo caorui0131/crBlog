@@ -46,8 +46,8 @@ function formatDate(date) {
 // blogs表
 // 查询bloglist
 function selectBlogList(data){
-  var tagidCode=data.tagidCode;
-  var userId=data.userId;
+  var tagidCode=data.tagidCode||'';
+  var userId=data.userId||'';
   // console.log('tagidCode:',tagidCode)
   // console.log('userId:',userId)
   return new Promise(function (resolve, reject) {
@@ -128,10 +128,39 @@ function deleteBlog(id){
 };
 
 // users表
+// 注册user信息
+function registerUser(data){
+  return new Promise(function (resolve, reject) {
+    var username=data.username;
+    var password=data.password;
+    var realname=data.realname;
+    connection.query('INSERT INTO blog.users (username, password,realname) VALUES ("'+username+'","'+password+'","'+realname+'");', function (error, results, fields) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+};
+
 // 查询user主页
 function selectUser(id){
   return new Promise(function (resolve, reject) {
     connection.query('SELECT * from blogs WHERE author="'+id+'"', function (error, results, fields) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+};
+
+// 查询userinfo信息
+function selectUserInfo(id){
+  return new Promise(function (resolve, reject) {
+    connection.query('SELECT * from users WHERE username="'+id+'"', function (error, results, fields) {
       if (error) {
         reject(error);
       } else {
@@ -157,8 +186,22 @@ function checkLogin(data){
 }
 
 // tags表
-// 查询taglist
-function selectTagList(data){
+// 查询所有taglist
+function selectTagList(){
+  return new Promise(function (resolve, reject) {
+    connection.query('SELECT tags.id,tags.title FROM blog.tags where 1=1' , function (error, results, fields) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        // console.log(results);
+        resolve(results);
+      }
+    });
+  });
+};
+// 查询 用户拥有的 taglist
+function selectUserTagList(data){
   return new Promise(function (resolve, reject) {
     var whereSql ='';
     if(data&&data.userId&&data.userId!=''){
@@ -176,7 +219,7 @@ function selectTagList(data){
   });
 };
 
-// 查询taglist
+// 用id查询taglist的详情
 function selectTagDetail(id){
   return new Promise(function (resolve, reject) {
     connection.query('SELECT * from tags WHERE id='+id, function (error, results, fields) {
@@ -297,10 +340,13 @@ module.exports = {
   updateBlog,
   deleteBlog,
   // users表
+  registerUser,
   selectUser,
+  selectUserInfo,
   checkLogin,
   // tags表
   selectTagList,
+  selectUserTagList,
   selectTagDetail,
   createTag,
   updateTag,

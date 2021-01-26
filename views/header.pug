@@ -9,12 +9,15 @@ div.header-container.box-shadow
             -if(currentUserName)
                 input(style='display:none;').currentUserName(value=currentUserName)
                 p.loginusername #{currentUserName}
+                div.loginhide.box-shadow
+                    input.logoutbtn(type="submit" value="退出登录" )
             -else
+                a.register() 注册 &nbsp;&nbsp;
                 a.login() 登录
         //- p.loginusername
         //-  <!-- 退出登录 -->
-        div.loginhide.box-shadow
-            input.logoutbtn(type="submit" value="退出登录" )
+        //- div.loginhide.box-shadow
+        //-     input.logoutbtn(type="submit" value="退出登录" )
     
 -if(isMobileOrPC=='Mobile')
     script(src='/javascripts/mobile/common/zepto.js')
@@ -35,6 +38,7 @@ script.
         //- }
         if(currentUserName){
             $(".login").hide();
+            $(".register").hide();
             $(".loginusername").show();
         }
 
@@ -102,5 +106,13 @@ script.
             //- backurl = url.substring(url.lastIndexOf('/') + 1, url.length);
             //- alert(backurl);
             window.location.href='/login?backurl='+backurl;
+        }) 
+        $(".register").click(function(){
+            //- var backurl=req.originalUrl;
+            backurl = window.location.pathname;
+            //- alert(url);
+            //- backurl = url.substring(url.lastIndexOf('/') + 1, url.length);
+            //- alert(backurl);
+            window.location.href='/register?backurl='+backurl;
         }) 
     })

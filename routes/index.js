@@ -11,6 +11,7 @@ router.get('/',async function(req, res, next) {
   // }else{
     // tagidCode：标签列表高亮
     var tagidCode=req.query.tagidCode;
+    var userId = req.params.userId|| '';
     var data={
       tagidCode:tagidCode
     }
@@ -48,19 +49,31 @@ router.get('/',async function(req, res, next) {
   // }
 });
 
-router.get('/blog/detail/:userId', async function(req, res, next) {
+router.get('/blog/detail/:id', async function(req, res, next) {
   let id = req.params.id || '';
-  console.log(id);
-  let blog = {};
-  blog= await db.selectBlogDetail(id).catch((err) => {
+  var blog= await db.selectBlogDetail(id).catch((err) => {
     console.error(err);
     throw err;
   });
+  var data={
+    userId:"'"+blog[0].author+"'"
+  }
   var blogTag= await db.selectBlogTag().catch((err) => {
     console.error(err);
     throw err;
   });
-  res.render('blogDetail', { blog ,blogTag});
+  // console.log(blog[0].author)
+  var userInfo= await db.selectUserInfo(blog[0].author).catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  var blogList= await db.selectBlogList(data).catch((err) => {
+    console.error(err);
+    throw err;
+  });
+   var blogListCount= blogList.length;
+  // console.log(userInfo)
+  res.render('blogDetail', { blog:blog[0] ,blogTag,userInfo:userInfo[0],blogListCount});
 });
 
 /* user页 */
@@ -68,22 +81,29 @@ router.get('/user/:userId', async function(req, res, next) {
   // 如何在Express中获取完整的URL？
   // var port = req.app.settings.port || cfg.port;
   // console.log('2222222:',req.protocol + '://' + req.hostname  + ( port == 80 || port == 443 ? '' : ':'+port ) + req.path);
-  console.log('2222222:',req.path);
-  var tagidCode=req.query.tagidCode;
-  let userId = req.params.userId|| '';
+  // console.log('2222222:',req.path);
+  var tagidCode=req.query.tagidCode|| '';
+  var userId = req.params.userId|| '';
   var data={
     userId:"'"+userId+"'",
     tagidCode:tagidCode
   }
+  var userInfo= await db.selectUserInfo(userId).catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  
   var blogList= await db.selectBlogList(data).catch((err) => {
     console.error(err);
     throw err;
   });
+  var blogListCount= blogList.length;
+  // console.log(blogList)
   var blogTag= await db.selectBlogTag().catch((err) => {
     console.error(err);
     throw err;
   });
-  var tagList= await db.selectTagList(data).catch((err) => {
+  var tagList= await db.selectUserTagList(data).catch((err) => {
     console.error(err);
     throw err;
   });
@@ -91,7 +111,7 @@ router.get('/user/:userId', async function(req, res, next) {
     console.error(err);
     throw err;
   });
-  res.render('author', { blogList,blogTag,tagList,countTagId });
+  res.render('author', {userInfo:userInfo[0],blogList,blogListCount,blogTag,tagList,countTagId ,tagidCode});
 });
 
 // // user页面
@@ -105,7 +125,41 @@ router.get('/user/:userId', async function(req, res, next) {
 //   // res.render('user', userBlogList);
 // });
 
+// 注册
+router.get('/register', async function(req, res, next) {
+  console.log('register');
+  var result = {};
+  var backurl = req.query.backurl;
+  if(backurl){
+    result = Object.assign(result,{backurl});
+  }
+  res.render('register', result);
+});
 
+router.post('/register', async function(req, res, next) {
+  var username=req.body.username;
+  var password=req.body.password;
+  var realname=req.body.realname;
+  var backurl=req.body.backurl;
+  var data={
+    username,
+    password,
+    realname
+  }
+  var result=await db.registerUser(data).catch((err) => {
+    console.error(err);
+    throw err;
+  });
+  if(result&&result.affectedRows>0){
+    res.cookie('name',username,{path:'/',expires: new Date(Date.now()+9000000),httpOnly:true})
+    res.json({code:200,successText:'注册成功!',backurl});
+  }else{
+    res.json({code:400,errMsg:'注册失败，请检查您的输入是否正确!'});
+    console.log('register is error');
+  }
+});
+
+// 登录
 router.get('/login', async function(req, res, next) {
   console.log('login');
   var result = {};

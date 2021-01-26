@@ -58,7 +58,7 @@ input{
   box-shadow: 0 1px 3px rgba(18,18,18,.1);
 }
 .div-box{
-  margin-bottom:10px ;
+  margin-bottom:16px ;
   -webkit-box-shadow: 0 1px 3px rgba(18,18,18,.1);
   box-shadow: 0 1px 3px rgba(18,18,18,.1);
   background-color: #fff;
@@ -137,6 +137,14 @@ body{
   margin: 0;
   word-break: break-all;
 }
+.strong{
+  font-size: 20px;
+  word-wrap: break-word;
+  color: #222226;
+  font-weight: 400;
+  margin: 0;
+  word-break: break-all;
+}
 .title{
   font-size: 16px;
   color: #333;
@@ -156,6 +164,11 @@ body{
 .textInfo{
   font-size: 12px;
   color: #333;
+  line-height: 18px;
+}
+.strong-summary{
+  font-size: 14px;
+  color: #999;
   line-height: 18px;
 }
 .summary{
@@ -235,7 +248,7 @@ body{
 .container{
   display: flex;
   width: 1366px;
-  padding: 54px 24px 0px;
+  padding: 60px 24px 0px;
   margin: 0px auto 0px;
   /* min-width: 1000px; */
   /* height: 100%; */
@@ -252,7 +265,7 @@ body{
 .aside{
   /* background-color: #fff; */
   /* width: 300px; */
-  margin-right:10px ;
+  margin-right:16px ;
   order: -1;
 }
 

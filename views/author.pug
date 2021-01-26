@@ -1,21 +1,41 @@
 extends layout
 
+block css 
+  //- link(ref='stylesheet' , href='/stylesheets/author.css')
+  link(rel='stylesheet', href='/stylesheets/author.css')
 block content
   div.container
-    div.div-box
-    div.main
-      ul.nav
-        li.nav-item.active 
-          a 所有
-      div.min-height.div-box
-        //- h1.title-article 作者主页
-        div.blogList
-          include ./include/blog.pug
-          //- each blog in blogList
-          //-   div.blogItem
-          //-     a.title(href='/blog/detail/'+blog.id target="_blank") #{blog.title}
-          //-     div.blogItem-info
-          //-       a.author.textInfo(href='/user/'+blog.author target="_blank") #{blog.author}&nbsp;
-          //-       span.summary #{blog.createtime}
-    div.aside
-      include ./tagList.pug
+    div.div-box.user-info
+      div.user-info-left
+        img
+      div.user-info-center 
+        p.strong #{userInfo.realname}
+        p.strong-summary 个人简介：#{userInfo.introduction}
+      div.user-info-right
+        include ./include/userInfo.pug
+        //- div.user-info-item
+        //-   p.title 关注
+        //-   p.strong #{userInfo.following}
+        //- div.user-info-item
+        //-   p.title 粉丝
+        //-   p.strong #{userInfo.fans}
+        //- div.user-info-item
+        //-   p.title 博客
+        //-   p.strong #{blogListCount}
+    div.row-div
+      div.main
+        ul.nav
+          li.nav-item.active 
+            a 所有
+        div.min-height.div-box
+          //- h1.title-article 作者主页
+          div.blogList
+            include ./include/blog.pug
+            //- each blog in blogList
+            //-   div.blogItem
+            //-     a.title(href='/blog/detail/'+blog.id target="_blank") #{blog.title}
+            //-     div.blogItem-info
+            //-       a.author.textInfo(href='/user/'+blog.author target="_blank") #{blog.author}&nbsp;
+            //-       span.summary #{blog.createtime}
+      div.aside
+        include ./tagList.pug
