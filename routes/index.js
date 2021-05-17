@@ -146,16 +146,25 @@ router.post('/register', async function(req, res, next) {
     password,
     realname
   }
-  var result=await db.registerUser(data).catch((err) => {
+  var usernameCount=await db.selectUserInfoCount(username).catch((err) => {
     console.error(err);
     throw err;
   });
-  if(result&&result.affectedRows>0){
-    res.cookie('name',username,{path:'/',expires: new Date(Date.now()+9000000),httpOnly:true})
-    res.json({code:200,successText:'注册成功!',backurl});
+  // console.log('usernameCount',usernameCount[0]['count(username)']);
+  if(usernameCount[0]['count(username)']>=1){
+    res.json({code:400,errMsg:'该用户名已存在!'});
   }else{
-    res.json({code:400,errMsg:'注册失败，请检查您的输入是否正确!'});
-    console.log('register is error');
+    var result=await db.registerUser(data).catch((err) => {
+      console.error(err);
+      throw err;
+    });
+    if(result&&result.affectedRows>0){
+      res.cookie('name',username,{path:'/',expires: new Date(Date.now()+9000000),httpOnly:true})
+      res.json({code:200,successText:'注册成功!',backurl});
+    }else{
+      res.json({code:400,errMsg:'注册失败，请检查您的输入是否正确!'});
+      console.log('register is error');
+    }
   }
 });
 
