@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "supervisor ./bin/www",
-    "dev-win": "set NODE_ENV=dev&&supervisor ./bin/www",
+    "dev": "set NODE_ENV=development&&supervisor ./bin/www",
     "production-linux":"export NODE_ENV=production&&supervisor ./bin/www",
     "production-win":"set NODE_ENV=production&&supervisor ./bin/www"
   },

@@ -114,16 +114,16 @@ router.get('/user/:userId', async function(req, res, next) {
   res.render('author', {userInfo:userInfo[0],blogList,blogListCount,blogTag,tagList,countTagId ,tagidCode});
 });
 
-// // user页面
-// router.get('/user/:userId', async function(req, res, next) {
-//   var userId = req.query.userId;
-//   var userBlogList= await db.selectBlogList(userId).catch((err) => {
-//     console.error(err);
-//     throw err;
-//   });
-//   console.log('userBlogList:',userBlogList)
-//   // res.render('user', userBlogList);
-// });
+// user页面
+  // router.get('/user/:userId', async function(req, res, next) {
+  //   var userId = req.query.userId;
+  //   var userBlogList= await db.selectBlogList(userId).catch((err) => {
+  //     console.error(err);
+  //     throw err;
+  //   });
+  //   console.log('userBlogList:',userBlogList)
+  //   // res.render('user', userBlogList);
+  // });
 
 // 注册
 router.get('/register', async function(req, res, next) {
@@ -247,4 +247,20 @@ function formatDate(date) {
   return YY + MM + DD + " " + hh + mm + ss;
 }
 
+// 导航-技术
+router.get('/technology', async function(req, res, next) {
+  var data={
+    nav:'technology'
+  }
+  try{
+    var urlList= await db.selectUrlList(data).catch((err) => {
+      console.error(err);
+      throw err;
+    });
+    console.log('urlList:',urlList)
+    res.render('technology', {urlList:urlList});
+  }catch(err){
+    console.error('/error',err);
+  }
+});
 module.exports = router;

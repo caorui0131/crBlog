@@ -7,7 +7,7 @@ const config = require('./config')
 
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
-var mobileRouter = require('./routes/mobile');
+// var mobileRouter = require('./routes/mobile');
 // var userRouter = require('./routes/user');
 // var blogRouter = require('./routes/blog');
 
@@ -23,24 +23,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/',async function(req, res, next) {
-  var isMobileOrPC = getMachine(req);
-  res.locals.isMobileOrPC=isMobileOrPC;
-  console.log('isMobileOrPC:',isMobileOrPC)
-  next();
-})
+// app.use('/',async function(req, res, next) {
+//   // 判断页面是在移动端还是PC端打开的
+//   var isMobileOrPC = getMachine(req);
+//   res.locals.isMobileOrPC=isMobileOrPC;
+//   console.log('isMobileOrPC:',isMobileOrPC)
+//   console.log('isMobileOrPC:',isMobileOrPC)
+//   next();
+// })
 app.use(function(req,res,next){
   var userName=req.cookies.name;
   var port = req.app.settings.port || cfg.port;
   var protocol=req.protocol;
   var hostname=req.hostname;
   var path=req.path;
-  // console.log('22222223:',req.protocol + '://' + req.hostname  + ( port == 80 || port == 443 ? '' : ':'+port ) + req.path);
   // 在本次会话创建一个全局变量
   res.locals.currentUserName=userName;
   res.locals.protocol=protocol;
   res.locals.hostname=hostname;
   res.locals.path=path;
+  // 判断页面是在移动端还是PC端打开的
+  var isMobileOrPC = getMachine(req);
+  res.locals.isMobileOrPC=isMobileOrPC;
+  console.log('isMobileOrPC:',isMobileOrPC)
+  console.log('isMobileOrPC:',isMobileOrPC)
   next();
 })
 app.use('/', indexRouter);
@@ -58,7 +64,7 @@ app.use('/admin',function(req, res, next){
 app.use('/admin', adminRouter);
 // app.use('/user', userRouter);
 // app.use('/blog', blogRouter);
-app.use('/mobile', mobileRouter);
+// app.use('/mobile', mobileRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -77,8 +83,10 @@ app.use(function(err, req, res, next) {
 
 // 判断页面是在移动端还是PC端打开的
 function getMachine(req) {
-  var deviceAgent = req.headers["user-agent"].toLowerCase();
-  var agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
+  var a = req.headers["User-Agent"] || req.headers["user-agent"];
+  var deviceAgent =a && a.toLowerCase();
+  var agentID =deviceAgent && deviceAgent.match(/(iphone|ipod|ipad|android)/);
+  console.log("agentID："+agentID)
   if (agentID) {
     return "Mobile";
   } else {

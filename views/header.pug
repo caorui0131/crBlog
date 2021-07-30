@@ -2,8 +2,23 @@ link(rel='stylesheet', href='/stylesheets/header.css')
 div.header-container.box-shadow
     div.container-title
         div.header-logo-container
-            h1.title1(onclick="javascript:window.location.href='/'") 博客
+            h1.title1(onclick="javascript:window.location.href='/'") 曹蕊的博客
         div.header-nav-container
+            a(href='/plan' ) 计划
+            a(href='/study' ) 学习
+                a(href='/frontEnd' ) 前端
+                a(href='/backEnd' ) 后端
+                a(href='/product' ) 产品
+                a(href='/design' ) 设计
+            a(href='/read' ) 读书
+                a(href='/miscellaneousNotes' ) 杂记
+                a(href='/computer' ) 计算机基础
+                a(href='/JavaScript' ) JavaScript高级程序设计（第3版）
+            a(href='/introduce' ) 介绍
+                a(href='/resume' ) 简历
+                a(href='/postAnalysis' ) 岗位分析
+            a(href='/urlNavigation' ) 网址导航（都可编辑）
+                a(href='/technology' ) 技术
             a.btnImportant-1(href='/admin' target='_blank') 创作中心
         div.header-btn-container
             -if(currentUserName)

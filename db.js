@@ -21,9 +21,6 @@ var connection = mysql.createConnection(config.blogMysql);
 //   });
 // }
 
-
-
-
 connection.connect();//开始链接
 // 查询mysql中的数据-测试
 // connection.query('SELECT * from blogs', function (error, results, fields) {
@@ -332,6 +329,18 @@ function addBlogTag(data){
   });
 };
 
+function selectUrlList(data){
+  return new Promise(function (resolve, reject) {
+    connection.query('SELECT * FROM urls where nav="'+data.nav+'"', function (error, results, fields) {
+      if (error) {
+        reject(error);
+      } else {
+        // console.log(results);
+        resolve(results);
+      }
+    });
+  });
+};
 module.exports = {
   // blogs表
   selectBlogList,
@@ -354,6 +363,8 @@ module.exports = {
   selectBlogTag,
   countTagId,
   selectTagIdOfBlogs,
-  addBlogTag
+  addBlogTag,
+  // url
+  selectUrlList,
 
 };

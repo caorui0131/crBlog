@@ -17,17 +17,6 @@ block content
       div(style="display: none;") #{currentUserName}
       div.blogList.box-shadow
         include ./include/blog.pug
-        //- each blog in blogList
-        //-   div.blogItem.div-item
-        //-     a.title(href='/blog/detail/'+blog.id target="_blank") #{blog.title}
-        //-     //- 展示博客对应的标签
-        //-     each blogTagItem in blogTag
-        //-       -if(blog.id==blogTagItem.id)
-        //-         span.blogTagItem #{blogTagItem.tagTitle}
-        //-     div.blogItem-info
-        //-       p.text.overhidden2 #{blog.content}
-        //-       a.author.textInfo(href='/user/'+blog.author target="_blank") #{blog.author}&nbsp;
-        //-       span.summary #{blog.createtime}
       div.footer
         div.copyright-box.div-box
           p ©2020-2021 xxxx
