@@ -328,10 +328,22 @@ function addBlogTag(data){
     });
   });
 };
-
-function selectUrlList(data){
+function selectUrlclassList(){
   return new Promise(function (resolve, reject) {
-    connection.query('SELECT * FROM urls where nav="'+data.nav+'"', function (error, results, fields) {
+    connection.query('select * from urlclass INNER JOIN urlclass2urls on  urlclass2urls.urlclassId=urlclass.urlclassId  group by urlclass2urls.urlclassId order by urlclass.sort desc;', function (error, results, fields) {
+      if (error) {
+        reject(error);
+      } else {
+        // console.log(results);
+        resolve(results);
+      }
+    });
+  });
+};
+function selectUrlList(urlclassId){
+  console.log('urlclassId:',urlclassId)
+  return new Promise(function (resolve, reject) {
+    connection.query('select * from urls INNER JOIN urlclass2urls on urlclass2urls.urlId=urls.urlId where urlclass2urls.urlclassId= '+urlclassId+' order by urlclass2urls.sort desc;', function (error, results, fields) {
       if (error) {
         reject(error);
       } else {
@@ -366,5 +378,5 @@ module.exports = {
   addBlogTag,
   // url
   selectUrlList,
-
+  selectUrlclassList,
 };

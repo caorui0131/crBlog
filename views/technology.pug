@@ -9,31 +9,9 @@ block content
   //- 首页
   div.container
     div.main
-        div 工具类
-          each url in urlList  
-            a(href=url.url target="_blank") #{url.name}
-              p #{url.content}
-        div 前端
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-        div 后端
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-        div 数据库
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-        div UI
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
-            a(href='' target="_blank") 
+      each urlclassList in selectUrlclassList  
+        div.list.div-box
+          p.title #{urlclassList.name}
+          each url in urlclassList.urlList[0]
+            a.div-item(href=url.url target="_blank") #{url.name}
+              //- p #{url.content}

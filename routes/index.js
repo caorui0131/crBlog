@@ -249,16 +249,27 @@ function formatDate(date) {
 
 // 导航-技术
 router.get('/technology', async function(req, res, next) {
-  var data={
-    nav:'technology'
-  }
+  // var data={
+  //   nav:'technology'
+  // }
   try{
-    var urlList= await db.selectUrlList(data).catch((err) => {
+    // 包含url的Urlclass
+    var selectUrlclassList= await db.selectUrlclassList().catch((err) => {
       console.error(err);
       throw err;
     });
-    console.log('urlList:',urlList)
-    res.render('technology', {urlList:urlList});
+    // console.log('selectUrlclassList:',selectUrlclassList)
+    for (var i = 0; i < selectUrlclassList.length; i++) {
+      selectUrlclassList[i].urlList = [];
+      var urlList= await db.selectUrlList(selectUrlclassList[i].urlclassId).catch((err) => {
+        console.error(err);
+        throw err;
+      });
+      // console.log('urlList:',urlList)
+      selectUrlclassList[i].urlList.push(urlList);
+    }
+    console.log('selectUrlclassList:',selectUrlclassList)
+    res.render('technology', {selectUrlclassList:selectUrlclassList});
   }catch(err){
     console.error('/error',err);
   }
